@@ -1,4 +1,7 @@
-﻿namespace ScaleOverlay
+﻿using System.Collections.Generic;
+using Rhino.UI;
+
+namespace ScaleOverlay
 {
     ///<summary>
     /// <para>Every RhinoCommon .rhp assembly must have one and only one PlugIn-derived
@@ -25,5 +28,10 @@
         // You can override methods here to change the plug-in behavior on
         // loading and shut down, add options pages to the Rhino _Option command
         // and maintain plug-in wide options in a document.
+        protected override void OptionsDialogPages(List<OptionsDialogPage> pages)
+        {
+            var optionsPage = new OptionsPage();
+            pages.Add(optionsPage);
+        }
     }
 }
