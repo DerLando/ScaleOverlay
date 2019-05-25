@@ -11,6 +11,33 @@ namespace ScaleOverlay
 {
     class ScaleConduit : DisplayConduit
     {
+        public static int GetSubDivisionCount(int scale)
+        {
+            if (scale > 1000) scale /= 10;
+            if (scale > 250) scale /= 10;
+            if (scale > 25) scale /= 10;
+            if (scale % 10 == 0) return 10;
+            if (scale % 5 == 0) return 5;
+            if (scale % 2 == 0) return 2;
+            return 0;
+        }
+
+        public static System.Drawing.Point[,] SubdivideLine(System.Drawing.Point startPoint, System.Drawing.Point endPoint, int subDividionCount, int lineLength)
+        {
+            System.Drawing.Point[,] lines = new System.Drawing.Point[subDividionCount - 1, 2];
+            int mainLineLength = Math.Abs(startPoint.X - endPoint.X);
+            int divisionLength = mainLineLength / subDividionCount;
+            int divisorHeight = startPoint.Y + lineLength;
+
+            for (int i = 0; i < subDividionCount - 1; i++)
+            {
+                lines[i, 0] = new System.Drawing.Point(startPoint.X - (i + 1) * divisionLength, startPoint.Y);
+                lines[i, 1] = new System.Drawing.Point(lines[i, 0].X, divisorHeight);
+            }
+
+            return lines;
+        }
+
         public static string UnitStringFromUnitSystem(UnitSystem system)
         {
             switch (system)
@@ -136,6 +163,19 @@ namespace ScaleOverlay
                 // draw line ends
                 e.Display.Draw2dLine(ptCorner, new System.Drawing.Point(ptCorner.X, ptCorner.Y + textRect.Height), Settings.LineColor, Settings.LineThickness);
                 e.Display.Draw2dLine(ptEnd, new System.Drawing.Point(ptEnd.X, ptEnd.Y + textRect.Height), Settings.LineColor, Settings.LineThickness);
+
+                // draw line divisors
+                int subdivisionCount = GetSubDivisionCount(foundScale);
+                if(subdivisionCount != 0)
+                {
+                    int lineLength = Convert.ToInt32(Settings.LineSubdividerLengthFactor * textRect.Height);
+                    var subdivisors = SubdivideLine(ptCorner, ptEnd, subdivisionCount, lineLength);
+                    for (int i = 0; i < subdivisionCount - 1; i++)
+                    {
+                        e.Display.Draw2dLine(subdivisors[i, 0], subdivisors[i, 1], Settings.LineColor, Settings.LineThickness);
+                    }
+
+                }
 
                 // display the text
                 e.Display.Draw2dText(text, Settings.TextColor, textOrigin, false, Settings.TextHeight);

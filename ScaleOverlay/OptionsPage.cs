@@ -24,6 +24,7 @@ namespace ScaleOverlay
             // line
             Settings.LineThickness = m_control.LineThickness;
             Settings.LineMaxLength = m_control.LineMaxLength;
+            Settings.LineSubdividerLengthFactor = m_control.SubdividerLengthFactor;
 
             // Text
             Settings.TextHeight = m_control.TextHeight;

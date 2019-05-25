@@ -48,6 +48,8 @@
             this.gB_TextSettings = new System.Windows.Forms.GroupBox();
             this.lbl_TextHeight = new System.Windows.Forms.Label();
             this.tB_TextHeight = new System.Windows.Forms.TextBox();
+            this.lbl_SubdividerLengthFactor = new System.Windows.Forms.Label();
+            this.tb_LengthFactor = new System.Windows.Forms.TextBox();
             this.gB_lineSettings.SuspendLayout();
             this.gB_Position.SuspendLayout();
             this.gB_Color.SuspendLayout();
@@ -58,9 +60,9 @@
             // 
             this.tB_lineThickness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_lineThickness.Location = new System.Drawing.Point(77, 19);
+            this.tB_lineThickness.Location = new System.Drawing.Point(136, 19);
             this.tB_lineThickness.Name = "tB_lineThickness";
-            this.tB_lineThickness.Size = new System.Drawing.Size(100, 20);
+            this.tB_lineThickness.Size = new System.Drawing.Size(313, 20);
             this.tB_lineThickness.TabIndex = 0;
             this.tB_lineThickness.TextChanged += new System.EventHandler(this.tB_lineThickness_TextChanged);
             // 
@@ -68,13 +70,15 @@
             // 
             this.gB_lineSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gB_lineSettings.Controls.Add(this.lbl_SubdividerLengthFactor);
+            this.gB_lineSettings.Controls.Add(this.tb_LengthFactor);
             this.gB_lineSettings.Controls.Add(this.lbl_LineMaxLength);
             this.gB_lineSettings.Controls.Add(this.tB_LineMaxLength);
             this.gB_lineSettings.Controls.Add(this.lbl_lineThickness);
             this.gB_lineSettings.Controls.Add(this.tB_lineThickness);
             this.gB_lineSettings.Location = new System.Drawing.Point(3, 3);
             this.gB_lineSettings.Name = "gB_lineSettings";
-            this.gB_lineSettings.Size = new System.Drawing.Size(200, 80);
+            this.gB_lineSettings.Size = new System.Drawing.Size(472, 100);
             this.gB_lineSettings.TabIndex = 1;
             this.gB_lineSettings.TabStop = false;
             this.gB_lineSettings.Text = "Line settings";
@@ -98,9 +102,9 @@
             this.gB_Position.Controls.Add(this.tB_OffsetY);
             this.gB_Position.Controls.Add(this.lbl_XOffset);
             this.gB_Position.Controls.Add(this.tB_OffsetX);
-            this.gB_Position.Location = new System.Drawing.Point(3, 148);
+            this.gB_Position.Location = new System.Drawing.Point(3, 168);
             this.gB_Position.Name = "gB_Position";
-            this.gB_Position.Size = new System.Drawing.Size(200, 104);
+            this.gB_Position.Size = new System.Drawing.Size(472, 100);
             this.gB_Position.TabIndex = 2;
             this.gB_Position.TabStop = false;
             this.gB_Position.Text = "Position settings";
@@ -118,9 +122,9 @@
             // 
             this.tB_OffsetX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_OffsetX.Location = new System.Drawing.Point(77, 19);
+            this.tB_OffsetX.Location = new System.Drawing.Point(136, 19);
             this.tB_OffsetX.Name = "tB_OffsetX";
-            this.tB_OffsetX.Size = new System.Drawing.Size(100, 20);
+            this.tB_OffsetX.Size = new System.Drawing.Size(313, 20);
             this.tB_OffsetX.TabIndex = 0;
             this.tB_OffsetX.TextChanged += new System.EventHandler(this.tB_OffsetX_TextChanged);
             // 
@@ -137,9 +141,9 @@
             // 
             this.tB_OffsetY.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_OffsetY.Location = new System.Drawing.Point(77, 45);
+            this.tB_OffsetY.Location = new System.Drawing.Point(136, 45);
             this.tB_OffsetY.Name = "tB_OffsetY";
-            this.tB_OffsetY.Size = new System.Drawing.Size(100, 20);
+            this.tB_OffsetY.Size = new System.Drawing.Size(313, 20);
             this.tB_OffsetY.TabIndex = 2;
             this.tB_OffsetY.TextChanged += new System.EventHandler(this.tB_OffsetY_TextChanged);
             // 
@@ -148,17 +152,17 @@
             this.lbl_TextGap.AutoSize = true;
             this.lbl_TextGap.Location = new System.Drawing.Point(6, 74);
             this.lbl_TextGap.Name = "lbl_TextGap";
-            this.lbl_TextGap.Size = new System.Drawing.Size(51, 13);
+            this.lbl_TextGap.Size = new System.Drawing.Size(49, 13);
             this.lbl_TextGap.TabIndex = 5;
-            this.lbl_TextGap.Text = "Text Gap";
+            this.lbl_TextGap.Text = "Text gap";
             // 
             // tB_TextGap
             // 
             this.tB_TextGap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_TextGap.Location = new System.Drawing.Point(77, 71);
+            this.tB_TextGap.Location = new System.Drawing.Point(136, 71);
             this.tB_TextGap.Name = "tB_TextGap";
-            this.tB_TextGap.Size = new System.Drawing.Size(100, 20);
+            this.tB_TextGap.Size = new System.Drawing.Size(313, 20);
             this.tB_TextGap.TabIndex = 4;
             this.tB_TextGap.TextChanged += new System.EventHandler(this.tB_TextGap_TextChanged);
             // 
@@ -170,9 +174,9 @@
             this.gB_Color.Controls.Add(this.lbl_TextColor);
             this.gB_Color.Controls.Add(this.btn_lineColor);
             this.gB_Color.Controls.Add(this.lbl_LineColor);
-            this.gB_Color.Location = new System.Drawing.Point(3, 258);
+            this.gB_Color.Location = new System.Drawing.Point(3, 274);
             this.gB_Color.Name = "gB_Color";
-            this.gB_Color.Size = new System.Drawing.Size(200, 80);
+            this.gB_Color.Size = new System.Drawing.Size(472, 80);
             this.gB_Color.TabIndex = 2;
             this.gB_Color.TabStop = false;
             this.gB_Color.Text = "Color settings";
@@ -190,9 +194,9 @@
             // 
             this.btn_lineColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_lineColor.Location = new System.Drawing.Point(77, 19);
+            this.btn_lineColor.Location = new System.Drawing.Point(136, 19);
             this.btn_lineColor.Name = "btn_lineColor";
-            this.btn_lineColor.Size = new System.Drawing.Size(100, 21);
+            this.btn_lineColor.Size = new System.Drawing.Size(313, 21);
             this.btn_lineColor.TabIndex = 2;
             this.btn_lineColor.UseVisualStyleBackColor = true;
             this.btn_lineColor.Click += new System.EventHandler(this.btn_lineColor_Click);
@@ -201,9 +205,9 @@
             // 
             this.btn_TextColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn_TextColor.Location = new System.Drawing.Point(77, 46);
+            this.btn_TextColor.Location = new System.Drawing.Point(136, 46);
             this.btn_TextColor.Name = "btn_TextColor";
-            this.btn_TextColor.Size = new System.Drawing.Size(100, 21);
+            this.btn_TextColor.Size = new System.Drawing.Size(313, 21);
             this.btn_TextColor.TabIndex = 4;
             this.btn_TextColor.UseVisualStyleBackColor = true;
             this.btn_TextColor.Click += new System.EventHandler(this.btn_TextColor_Click);
@@ -222,17 +226,17 @@
             this.lbl_LineMaxLength.AutoSize = true;
             this.lbl_LineMaxLength.Location = new System.Drawing.Point(6, 48);
             this.lbl_LineMaxLength.Name = "lbl_LineMaxLength";
-            this.lbl_LineMaxLength.Size = new System.Drawing.Size(66, 13);
+            this.lbl_LineMaxLength.Size = new System.Drawing.Size(79, 13);
             this.lbl_LineMaxLength.TabIndex = 3;
-            this.lbl_LineMaxLength.Text = "Max. Length";
+            this.lbl_LineMaxLength.Text = "Average length";
             // 
             // tB_LineMaxLength
             // 
             this.tB_LineMaxLength.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_LineMaxLength.Location = new System.Drawing.Point(77, 45);
+            this.tB_LineMaxLength.Location = new System.Drawing.Point(136, 45);
             this.tB_LineMaxLength.Name = "tB_LineMaxLength";
-            this.tB_LineMaxLength.Size = new System.Drawing.Size(100, 20);
+            this.tB_LineMaxLength.Size = new System.Drawing.Size(313, 20);
             this.tB_LineMaxLength.TabIndex = 2;
             this.tB_LineMaxLength.TextChanged += new System.EventHandler(this.tB_LineMaxLength_TextChanged);
             // 
@@ -242,9 +246,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gB_TextSettings.Controls.Add(this.lbl_TextHeight);
             this.gB_TextSettings.Controls.Add(this.tB_TextHeight);
-            this.gB_TextSettings.Location = new System.Drawing.Point(3, 89);
+            this.gB_TextSettings.Location = new System.Drawing.Point(3, 109);
             this.gB_TextSettings.Name = "gB_TextSettings";
-            this.gB_TextSettings.Size = new System.Drawing.Size(200, 53);
+            this.gB_TextSettings.Size = new System.Drawing.Size(472, 53);
             this.gB_TextSettings.TabIndex = 4;
             this.gB_TextSettings.TabStop = false;
             this.gB_TextSettings.Text = "Text settings";
@@ -262,11 +266,30 @@
             // 
             this.tB_TextHeight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tB_TextHeight.Location = new System.Drawing.Point(77, 19);
+            this.tB_TextHeight.Location = new System.Drawing.Point(136, 19);
             this.tB_TextHeight.Name = "tB_TextHeight";
-            this.tB_TextHeight.Size = new System.Drawing.Size(100, 20);
+            this.tB_TextHeight.Size = new System.Drawing.Size(313, 20);
             this.tB_TextHeight.TabIndex = 0;
             this.tB_TextHeight.TextChanged += new System.EventHandler(this.tB_TextHeight_TextChanged);
+            // 
+            // lbl_SubdividerLengthFactor
+            // 
+            this.lbl_SubdividerLengthFactor.AutoSize = true;
+            this.lbl_SubdividerLengthFactor.Location = new System.Drawing.Point(6, 74);
+            this.lbl_SubdividerLengthFactor.Name = "lbl_SubdividerLengthFactor";
+            this.lbl_SubdividerLengthFactor.Size = new System.Drawing.Size(119, 13);
+            this.lbl_SubdividerLengthFactor.TabIndex = 5;
+            this.lbl_SubdividerLengthFactor.Text = "Subdivider length factor";
+            // 
+            // tb_LengthFactor
+            // 
+            this.tb_LengthFactor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb_LengthFactor.Location = new System.Drawing.Point(136, 71);
+            this.tb_LengthFactor.Name = "tb_LengthFactor";
+            this.tb_LengthFactor.Size = new System.Drawing.Size(313, 20);
+            this.tb_LengthFactor.TabIndex = 4;
+            this.tb_LengthFactor.TextChanged += new System.EventHandler(this.tb_LengthFactor_TextChanged);
             // 
             // OptionsUserControl
             // 
@@ -277,7 +300,7 @@
             this.Controls.Add(this.gB_Position);
             this.Controls.Add(this.gB_lineSettings);
             this.Name = "OptionsUserControl";
-            this.Size = new System.Drawing.Size(209, 489);
+            this.Size = new System.Drawing.Size(481, 489);
             this.gB_lineSettings.ResumeLayout(false);
             this.gB_lineSettings.PerformLayout();
             this.gB_Position.ResumeLayout(false);
@@ -312,5 +335,7 @@
         private System.Windows.Forms.GroupBox gB_TextSettings;
         private System.Windows.Forms.Label lbl_TextHeight;
         private System.Windows.Forms.TextBox tB_TextHeight;
+        private System.Windows.Forms.Label lbl_SubdividerLengthFactor;
+        private System.Windows.Forms.TextBox tb_LengthFactor;
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace ScaleOverlay
 {
@@ -20,6 +21,7 @@ namespace ScaleOverlay
         public int TextGap { get; set; }
         public Color LineColor { get; set; }
         public Color TextColor { get; set; }
+        public double SubdividerLengthFactor { get; set; }
 
 
         public void LoadSettings()
@@ -29,6 +31,8 @@ namespace ScaleOverlay
             tB_lineThickness.Text = LineThickness.ToString();
             LineMaxLength = Settings.LineMaxLength;
             tB_LineMaxLength.Text = LineMaxLength.ToString();
+            SubdividerLengthFactor = Settings.LineSubdividerLengthFactor;
+            tb_LengthFactor.Text = SubdividerLengthFactor.ToString();
 
             // text
             TextHeight = Settings.TextHeight;
@@ -47,6 +51,7 @@ namespace ScaleOverlay
             btn_lineColor.BackColor = LineColor;
             TextColor = Settings.TextColor;
             btn_TextColor.BackColor = TextColor;
+
         }
 
         public OptionsUserControl()
@@ -145,5 +150,15 @@ namespace ScaleOverlay
             }
         }
 
+        private void tb_LengthFactor_TextChanged(object sender, EventArgs e)
+        {
+            if(double.TryParse(tb_LengthFactor.Text, out var result))
+            {
+                SubdividerLengthFactor = result;
+                if (result < Settings.MinSubdividerFactor) SubdividerLengthFactor = Settings.MinSubdividerFactor;
+                if (result > Settings.MaxSubdividerFactor) SubdividerLengthFactor = Settings.MaxSubdividerFactor;
+                tb_LengthFactor.Text = SubdividerLengthFactor.ToString();
+            }
+        }
     }
 }

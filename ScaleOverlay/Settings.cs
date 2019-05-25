@@ -18,7 +18,6 @@ namespace ScaleOverlay
         public static int TextGap = 10;
         public static int TextHeight = 12;
         public static Color TextColor = Color.Black;
-        public static int LineSubdivisionCount = 5;
         public static double LineSubdividerLengthFactor = 0.5;
 
         // defaults for changeable settings
@@ -30,7 +29,6 @@ namespace ScaleOverlay
         private static int DefaultTextGap = 10;
         private static int DefaultTextHeight = 12;
         private static Color DefaultTextColor = Color.Black;
-        private static int DefaultLineSubdivisionCount = 5;
         private static double DefaultLineSubdividerLengthFactor = 0.5;
 
 
@@ -63,6 +61,7 @@ namespace ScaleOverlay
             TextGap = DefaultTextGap;
             TextHeight = DefaultTextHeight;
             TextColor = DefaultTextColor;
+            LineSubdividerLengthFactor = DefaultLineSubdividerLengthFactor;
         }
 
         //public static void SetOffsetX(int offset)
