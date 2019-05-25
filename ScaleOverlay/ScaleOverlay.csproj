@@ -52,17 +52,11 @@
       <HintPath>C:\Program Files\Rhino 6\System\Rhino.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EtoOptionsPageControl.cs" />
     <Compile Include="OptionsPage.cs" />
-    <Compile Include="OptionsUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="OptionsUserControl.Designer.cs">
-      <DependentUpon>OptionsUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="ScaleConduit.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ToggleScaleOverlay.cs" />
@@ -71,9 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
-    <EmbeddedResource Include="OptionsUserControl.resx">
-      <DependentUpon>OptionsUserControl.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

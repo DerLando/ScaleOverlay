@@ -1,12 +1,11 @@
-﻿using System.Windows.Forms;
-using Rhino;
+﻿using Rhino;
 using Rhino.UI;
 
 namespace ScaleOverlay
 {
     public class OptionsPage : OptionsDialogPage
     {
-        private OptionsUserControl m_control;
+        private EtoOptionsPageControl m_control;
 
         public OptionsPage()
           : base("Scale Overlay")
@@ -15,7 +14,7 @@ namespace ScaleOverlay
 
         public override object PageControl
         {
-            get { return m_control ?? (m_control = new OptionsUserControl()); }
+            get { return m_control ?? (m_control = new EtoOptionsPageControl()); }
         }
 
         public override bool OnApply()
@@ -24,7 +23,7 @@ namespace ScaleOverlay
             // line
             Settings.LineThickness = m_control.LineThickness;
             Settings.LineMaxLength = m_control.LineMaxLength;
-            Settings.LineSubdividerLengthFactor = m_control.SubdividerLengthFactor;
+            Settings.LineSubdividerLengthFactor = m_control.LineDividerLengthFactor;
 
             // Text
             Settings.TextHeight = m_control.TextHeight;
@@ -55,7 +54,6 @@ namespace ScaleOverlay
         {
             Settings.RestoreDefaults();
             m_control.LoadSettings();
-            m_control.Update();
         }
     }
 }

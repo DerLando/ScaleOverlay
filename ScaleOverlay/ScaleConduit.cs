@@ -172,7 +172,7 @@ namespace ScaleOverlay
                     var subdivisors = SubdivideLine(ptCorner, ptEnd, subdivisionCount, lineLength);
                     for (int i = 0; i < subdivisionCount - 1; i++)
                     {
-                        e.Display.Draw2dLine(subdivisors[i, 0], subdivisors[i, 1], Settings.LineColor, Settings.LineThickness);
+                        e.Display.Draw2dLine(subdivisors[i, 0], subdivisors[i, 1], Settings.LineColor, Convert.ToInt32(Settings.LineThickness * Settings.LineSubdividerLengthFactor));
                     }
 
                 }
