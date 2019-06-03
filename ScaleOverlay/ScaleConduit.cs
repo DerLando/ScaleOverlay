@@ -216,7 +216,7 @@ namespace ScaleOverlay
                 // find boundary of text to draw
                 var textOrigin = new Point2d(line.To.X, line.To.Y);
                 string text = $"{foundScale} {UnitStringFromUnitSystem(RhinoDoc.ActiveDoc.ModelUnitSystem)}";
-                var textRect = e.Display.Measure2dText(text, textOrigin, false, 0, Settings.TextHeight, "Arial");
+                var textRect = e.Display.Measure2dText(text, textOrigin, false, 0, Settings.TextHeight, Settings.TextFont.EnglishFaceName);
 
                 // move text origin in -X by boundary
                 textOrigin.X = textOrigin.X - textRect.Width - Settings.TextGap;
@@ -240,7 +240,7 @@ namespace ScaleOverlay
                 }
 
                 // display the text
-                e.Display.Draw2dText(text, Settings.TextColor, textOrigin, false, Settings.TextHeight);
+                e.Display.Draw2dText(text, Settings.TextColor, textOrigin, false, Settings.TextHeight, Settings.TextFont.FamilyPlusFaceName);
             }
         }
     }

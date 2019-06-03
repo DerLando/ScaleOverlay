@@ -29,21 +29,22 @@ namespace ScaleOverlay
         {
             // TODO: Check nulls
             // line
-            Settings.LineThickness = m_control.LineThickness;
-            Settings.LineMaxLength = m_control.LineMaxLength;
-            Settings.LineSubdividerLengthFactor = m_control.LineDividerLengthFactor;
+            ScaleOverlayPlugIn.Instance.Settings.SetInteger("LineThickness", m_control.LineThickness);
+            ScaleOverlayPlugIn.Instance.Settings.SetInteger("LineMaxLength",m_control.LineMaxLength);
+            ScaleOverlayPlugIn.Instance.Settings.SetDouble("LineSubdividerLengthFactor", m_control.LineDividerLengthFactor);
 
             // Text
-            Settings.TextHeight = m_control.TextHeight;
+            ScaleOverlayPlugIn.Instance.Settings.SetInteger("TextHeight", m_control.TextHeight);
+            ScaleOverlayPlugIn.Instance.Settings.SetString("TextFontFamilyFaceName", m_control.TextFont.FamilyPlusFaceName);
 
             // position
-            Settings.OffsetX = m_control.OffsetX;
-            Settings.OffsetY = m_control.OffsetY;
-            Settings.TextGap = m_control.TextGap;
+            ScaleOverlayPlugIn.Instance.Settings.SetInteger("OffsetX", m_control.OffsetX);
+            ScaleOverlayPlugIn.Instance.Settings.SetInteger("OffsetY", m_control.OffsetY);
+            ScaleOverlayPlugIn.Instance.Settings.SetInteger("TextGap", m_control.TextGap);
 
             // color
-            Settings.LineColor = m_control.LineColor;
-            Settings.TextColor = m_control.TextColor;
+            ScaleOverlayPlugIn.Instance.Settings.SetColor("LineColor", m_control.LineColor);
+            ScaleOverlayPlugIn.Instance.Settings.SetColor("TextColor", m_control.TextColor);
 
             // redraw
             RhinoDoc.ActiveDoc.Views.Redraw();
@@ -67,7 +68,7 @@ namespace ScaleOverlay
         /// </summary>
         public override void OnDefaults()
         {
-            Settings.RestoreDefaults();
+            ScaleOverlayPlugIn.Instance.RestoreDefaultSettings();
             m_control.LoadSettings();
         }
     }

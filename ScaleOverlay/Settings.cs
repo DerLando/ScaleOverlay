@@ -13,15 +13,16 @@ namespace ScaleOverlay
     public static class Settings
     {
         // changeable settings
-        public static int OffsetX = 10;
-        public static int OffsetY = 10;
-        public static int LineThickness = 2;
-        public static int LineMaxLength = 100;
-        public static Color LineColor = Color.FromArgb(40, 40, 40);
-        public static int TextGap = 10;
-        public static int TextHeight = 12;
-        public static Color TextColor = Color.Black;
-        public static double LineSubdividerLengthFactor = 0.5;
+        public static int OffsetX => ScaleOverlayPlugIn.Instance.Settings.GetInteger("OffsetX", DefaultOffsetX, MinOffsetX, MaxOffsetX);
+        public static int OffsetY => ScaleOverlayPlugIn.Instance.Settings.GetInteger("OffsetY", DefaultOffsetY, MinOffsetY, MaxOffsetY);
+        public static int LineThickness => ScaleOverlayPlugIn.Instance.Settings.GetInteger("LineThickness", DefaultLineThickness, MinLineThickness, MaxLineThickness);
+        public static int LineMaxLength => ScaleOverlayPlugIn.Instance.Settings.GetInteger("LineMaxLength", DefaultLineMaxLength, MinLineMaxLength, MaxLineMaxLength);
+        public static Color LineColor => ScaleOverlayPlugIn.Instance.Settings.GetColor("LineColor", DefaultLineColor);
+        public static int TextGap => ScaleOverlayPlugIn.Instance.Settings.GetInteger("TextGap", DefaultTextGap, MinTextGap, MaxTextGap);
+        public static int TextHeight => ScaleOverlayPlugIn.Instance.Settings.GetInteger("TextHeight", DefaultTextHeight, MinTextHeight, MaxTextHeight);
+        public static Color TextColor => ScaleOverlayPlugIn.Instance.Settings.GetColor("TextColor", DefaultTextColor);
+        public static Rhino.DocObjects.Font TextFont => new Rhino.DocObjects.Font(ScaleOverlayPlugIn.Instance.Settings.GetString("TextFontFamilyFaceName", DefaultTextFont.FamilyPlusFaceName));
+        public static double LineSubdividerLengthFactor => ScaleOverlayPlugIn.Instance.Settings.GetDouble("LineSubdividerLengthFactor", DefaultLineSubdividerLengthFactor);
 
         // defaults for changeable settings
         private static int DefaultOffsetX = 10;
@@ -32,6 +33,7 @@ namespace ScaleOverlay
         private static int DefaultTextGap = 10;
         private static int DefaultTextHeight = 12;
         private static Color DefaultTextColor = Color.Black;
+        public static Rhino.DocObjects.Font DefaultTextFont = new Rhino.DocObjects.Font("Arial");
         private static double DefaultLineSubdividerLengthFactor = 0.5;
 
 
@@ -54,20 +56,5 @@ namespace ScaleOverlay
         public static double MinSubdividerFactor = 0.01;
         public static double MaxSubdividerFactor = 1.00;
 
-        /// <summary>
-        /// Restores all settings to their default values
-        /// </summary>
-        public static void RestoreDefaults()
-        {
-            OffsetX = DefaultOffsetX;
-            OffsetY = DefaultOffsetY;
-            LineThickness = DefaultLineThickness;
-            LineColor = DefaultLineColor;
-            LineMaxLength = DefaultLineMaxLength;
-            TextGap = DefaultTextGap;
-            TextHeight = DefaultTextHeight;
-            TextColor = DefaultTextColor;
-            LineSubdividerLengthFactor = DefaultLineSubdividerLengthFactor;
-        }
     }
 }

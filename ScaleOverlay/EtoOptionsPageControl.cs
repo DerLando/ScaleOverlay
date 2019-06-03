@@ -26,6 +26,8 @@ namespace ScaleOverlay
         private TextBox tB_TextGap = new TextBox();
         private Label lbl_TextHeight = new Label() { Text = "Height", ToolTip = "Height of text in pixels", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_TextHeight = new TextBox();
+        private Label lbl_TextFont = new Label() { Text = "Font", ToolTip = "Font of text.", VerticalAlignment = VerticalAlignment.Center };
+        private FontPicker fP_TextFont = new FontPicker();
 
         // margin settings labels and textboxes
         private Label lbl_OffsetX = new Label() { Text = "Offset X", ToolTip = "Horizontal offset of scale line from bottom right corner of viewport in pixels.", VerticalAlignment = VerticalAlignment.Center };
@@ -55,6 +57,7 @@ namespace ScaleOverlay
         public System.Drawing.Color LineColor { get; set; }
         public System.Drawing.Color TextColor { get; set; }
         public double LineDividerLengthFactor { get; set; }
+        public Rhino.DocObjects.Font TextFont { get; set; }
 
         #endregion
 
@@ -75,6 +78,8 @@ namespace ScaleOverlay
             // text
             TextHeight = Settings.TextHeight;
             tB_TextHeight.Text = TextHeight.ToString();
+            TextFont = Settings.TextFont;
+            fP_TextFont.Value = TextFont.ToEtoFont();
 
             // position
             OffsetX = Settings.OffsetX;
@@ -111,6 +116,7 @@ namespace ScaleOverlay
             tB_OffsetY.TextChanged += tB_OffsetY_TextChanged;
             btn_LineColor.Click += btn_LineColor_Clicked;
             btn_TextColor.Click += btn_TextColor_Clicked;
+            fP_TextFont.ValueChanged += fP_TextFont_ValueChanged;
             #endregion
 
             // create layout
@@ -136,6 +142,7 @@ namespace ScaleOverlay
             group.Title = "Text Settings";
             group.AddRow(new DynamicRow(new Control[] { lbl_TextHeight, tB_TextHeight }));
             group.AddRow(new DynamicRow(new Control[] { lbl_TextGap, tB_TextGap }));
+            group.AddRow(new DynamicRow(new Control[] { lbl_TextFont, fP_TextFont }));
 
             row.Add(group);
 
@@ -166,6 +173,11 @@ namespace ScaleOverlay
             layout.Add(null);
             layout.EndHorizontal();
             Content = layout;
+        }
+
+        private void fP_TextFont_ValueChanged(object sender, EventArgs e)
+        {
+            TextFont = fP_TextFont.Value.ToRhinoFont();
         }
 
         private void tB_OffsetY_TextChanged(object sender, EventArgs e)

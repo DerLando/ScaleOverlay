@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
+using Rhino.PlugIns;
 using Rhino.UI;
 
 namespace ScaleOverlay
@@ -17,6 +19,17 @@ namespace ScaleOverlay
         public ScaleOverlayPlugIn()
         {
             Instance = this;
+            Settings.SetDefault("OffsetX", 10);
+            Settings.SetDefault("OffsetY", 10);
+            Settings.SetDefault("LineThickness", 2);
+            Settings.SetDefault("LineMaxLength", 100);
+            Settings.SetDefault("LineColor", Color.FromArgb(40, 40, 40));
+            Settings.SetDefault("TextGap", 10);
+            Settings.SetDefault("TextHeight", 12);
+            Settings.SetDefault("TextColor", Color.Black);
+            Settings.SetDefault("TextFontFamilyFaceName", "Arial");
+            Settings.SetDefault("LineSubdividerLengthFactor", 0.5);
+
         }
 
         ///<summary>Gets the only instance of the ScaleOverlayPlugIn plug-in.</summary>
@@ -38,6 +51,20 @@ namespace ScaleOverlay
         {
             var optionsPage = new OptionsPage();
             pages.Add(optionsPage);
+        }
+
+        public void RestoreDefaultSettings()
+        {
+            if(Settings.TryGetDefault("OffsetX", out int offsetX)) Settings.SetInteger("OffsetX", offsetX);
+            if (Settings.TryGetDefault("OffsetY", out int offsetY)) Settings.SetInteger("OffsetY", offsetY);
+            if (Settings.TryGetDefault("LineThickness", out int lineThickness)) Settings.SetInteger("LineThickness", lineThickness);
+            if (Settings.TryGetDefault("LineMaxLength", out int lineMaxLength)) Settings.SetInteger("LineMaxLength", lineMaxLength);
+            if (Settings.TryGetDefault("LineColor", out Color lineColor)) Settings.SetColor("LineColor", lineColor);
+            if (Settings.TryGetDefault("TextGap", out int textGap)) Settings.SetInteger("TextGap", textGap);
+            if (Settings.TryGetDefault("TextHeight", out int textHeight)) Settings.SetInteger("TextHeight", textHeight);
+            if (Settings.TryGetDefault("TextColor", out Color textColor)) Settings.SetColor("TextColor", textColor);
+            if (Settings.TryGetDefault("TextFontFamilyFaceName", out string textFontFamilyFaceName)) Settings.SetString("TextFontFamilyFaceName", textFontFamilyFaceName);
+            if (Settings.TryGetDefault("LineSubdividerLengthFactor", out double lineSubdividerLengthFactor)) Settings.SetDouble("LineSubdividerLengthFactor", lineSubdividerLengthFactor);
         }
     }
 }
