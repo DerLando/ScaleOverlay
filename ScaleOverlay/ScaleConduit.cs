@@ -3,6 +3,7 @@ using Rhino.Display;
 using Rhino.Geometry;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -227,16 +228,43 @@ namespace ScaleOverlay
                 e.Display.Draw2dLine(line.To, new System.Drawing.Point(line.To.X, line.To.Y + textRect.Height), Settings.LineColor, Settings.LineThickness);
 
                 // draw line divisors
-                int subdivisionCount = GetSubDivisionCount(foundScale);
-                if(subdivisionCount != 0)
+                switch (Settings.Style)
                 {
-                    int lineLength = Convert.ToInt32(Settings.LineSubdividerLengthFactor * textRect.Height);
-                    var subdivisonPoints = SubdivideLine(line, subdivisionCount);
-                    for (int i = 0; i < subdivisonPoints.Length; i++)
-                    {
-                        e.Display.DrawLine2d(CreateSubdividerLine(subdivisonPoints[i], lineLength), Settings.LineColor, Convert.ToInt32(Settings.LineThickness * Settings.LineSubdividerLengthFactor));
-                    }
+                    case ScaleStyle.Line:
+                        break;
+                    case ScaleStyle.Ruler:
+                        int subdivisionCount = GetSubDivisionCount(foundScale);
+                        if (subdivisionCount != 0)
+                        {
+                            int lineLength = Convert.ToInt32(Settings.LineSubdividerLengthFactor * textRect.Height);
+                            var subdivisonPoints = SubdivideLine(line, subdivisionCount);
+                            for (int i = 0; i < subdivisonPoints.Length; i++)
+                            {
+                                e.Display.DrawLine2d(CreateSubdividerLine(subdivisonPoints[i], lineLength), Settings.LineColor, Convert.ToInt32(Settings.LineThickness * Settings.LineSubdividerLengthFactor));
+                            }
+                        }
+                        break;
+                    case ScaleStyle.Map:
+                        subdivisionCount = GetSubDivisionCount(foundScale);
+                        if (subdivisionCount != 0)
+                        {
+                            int lineLength = Convert.ToInt32(Settings.LineSubdividerLengthFactor * textRect.Height);
 
+                            List<System.Drawing.Point> subdivisionPoints = new List<System.Drawing.Point>() { line.From };
+                            subdivisionPoints.AddRange(SubdivideLine(line, subdivisionCount));
+                            subdivisionPoints.Add(line.To);
+
+                            for (int i = 0; i < subdivisionPoints.Count - 1; i++)
+                            {
+                                Rectangle rect = new Rectangle(subdivisionPoints[i + 1].X, subdivisionPoints[i + 1].Y + textRect.Height, subdivisionPoints[i].X - subdivisionPoints[i + 1].X, -textRect.Height);
+                                Color fillColor = Settings.LineColor;
+                                if (i % 2 != 0) fillColor = Color.Transparent;
+                                e.Display.Draw2dRectangle(rect, Settings.LineColor, Settings.LineThickness, fillColor);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
                 // display the text

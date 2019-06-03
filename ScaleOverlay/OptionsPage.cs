@@ -32,6 +32,8 @@ namespace ScaleOverlay
             ScaleOverlayPlugIn.Instance.Settings.SetInteger("LineThickness", m_control.LineThickness);
             ScaleOverlayPlugIn.Instance.Settings.SetInteger("LineMaxLength",m_control.LineMaxLength);
             ScaleOverlayPlugIn.Instance.Settings.SetDouble("LineSubdividerLengthFactor", m_control.LineDividerLengthFactor);
+            ScaleOverlayPlugIn.Instance.Settings.SetEnumValue<ScaleStyle>("ScaleStyle", m_control.ScaleStyle);
+
 
             // Text
             ScaleOverlayPlugIn.Instance.Settings.SetInteger("TextHeight", m_control.TextHeight);

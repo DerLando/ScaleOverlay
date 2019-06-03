@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Rhino.PlugIns;
 using Rhino.UI;
@@ -29,6 +30,7 @@ namespace ScaleOverlay
             Settings.SetDefault("TextColor", Color.Black);
             Settings.SetDefault("TextFontFamilyFaceName", "Arial");
             Settings.SetDefault("LineSubdividerLengthFactor", 0.5);
+            Settings.SetEnumValue<ScaleStyle>("ScaleStyle", ScaleStyle.Ruler);
 
         }
 
@@ -65,6 +67,7 @@ namespace ScaleOverlay
             if (Settings.TryGetDefault("TextColor", out Color textColor)) Settings.SetColor("TextColor", textColor);
             if (Settings.TryGetDefault("TextFontFamilyFaceName", out string textFontFamilyFaceName)) Settings.SetString("TextFontFamilyFaceName", textFontFamilyFaceName);
             if (Settings.TryGetDefault("LineSubdividerLengthFactor", out double lineSubdividerLengthFactor)) Settings.SetDouble("LineSubdividerLengthFactor", lineSubdividerLengthFactor);
+            Settings.SetEnumValue<ScaleStyle>("ScaleStyle", ScaleStyle.Ruler);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace ScaleOverlay
         public static Color TextColor => ScaleOverlayPlugIn.Instance.Settings.GetColor("TextColor", DefaultTextColor);
         public static Rhino.DocObjects.Font TextFont => new Rhino.DocObjects.Font(ScaleOverlayPlugIn.Instance.Settings.GetString("TextFontFamilyFaceName", DefaultTextFont.FamilyPlusFaceName));
         public static double LineSubdividerLengthFactor => ScaleOverlayPlugIn.Instance.Settings.GetDouble("LineSubdividerLengthFactor", DefaultLineSubdividerLengthFactor);
+        public static ScaleStyle Style => ScaleOverlayPlugIn.Instance.Settings.GetEnumValue<ScaleStyle>("ScaleStyle", ScaleStyle.Ruler);
 
         // defaults for changeable settings
         private static int DefaultOffsetX = 10;

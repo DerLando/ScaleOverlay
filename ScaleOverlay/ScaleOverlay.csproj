@@ -60,13 +60,14 @@
     <Compile Include="Line2d.cs" />
     <Compile Include="OptionsPage.cs" />
     <Compile Include="ScaleConduit.cs" />
+    <Compile Include="ScaleStyle.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ToggleScaleOverlay.cs" />
     <Compile Include="ScaleOverlayPlugIn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EmbeddedResources\plugin-utility.ico" />
+    <EmbeddedResource Include="EmbeddedResources\favicon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

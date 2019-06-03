@@ -16,7 +16,7 @@ using Rhino.PlugIns;
 
 // Icons should be Windows .ico files and contain 32-bit images in the following sizes: 16, 24, 32, 48, and 256.
 // This is a Rhino 6-only description.
-[assembly: PlugInDescription(DescriptionType.Icon, "ScaleOverlay.EmbeddedResources.plugin-utility.ico")]
+[assembly: PlugInDescription(DescriptionType.Icon, "ScaleOverlay.EmbeddedResources.favicon.ico")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
@@ -52,7 +52,7 @@ using Rhino.PlugIns;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("0.2.*")]
+[assembly: AssemblyVersion("0.3.*")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 // Make compatible with Rhino Installer Engine

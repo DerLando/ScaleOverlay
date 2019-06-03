@@ -35,7 +35,7 @@ namespace ScaleOverlay
 
         public static Eto.Drawing.Font ToEtoFont(this Rhino.DocObjects.Font rhinoFont)
         {
-            return new Eto.Drawing.Font(rhinoFont.EnglishFamilyName, Settings.TextHeight, rhinoFont.ToEtoFontStyle());
+            return new Eto.Drawing.Font(rhinoFont.FamilyName, Settings.TextHeight, rhinoFont.ToEtoFontStyle());
         }
     }
 }

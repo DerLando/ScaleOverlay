@@ -16,10 +16,12 @@ namespace ScaleOverlay
         // line settings labels and textboxes
         private Label lbl_LineThickness = new Label() { Text = "Thickness", ToolTip = "Thickness of scale line in pixels.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_LineThickness = new TextBox();
-        private Label lbl_LineMaxLength = new Label() { Text = "Average Length", ToolTip = "Average length of scale line before jumping to another scale in pixels.", VerticalAlignment = VerticalAlignment.Center };
+        private Label lbl_LineMaxLength = new Label() { Text = "Maximum Length", ToolTip = "Maximum length of scale line before jumping to another scale in pixels.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_LineMaxLength = new TextBox();
         private Label lbl_LineDividerLengthFactor = new Label() { Text = "Subdivider Length Factor", ToolTip = "Length of supdividers as a factor of the length of first and last divider.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_LineDividerLengthFactor = new TextBox();
+        private Label lbl_ScaleStyle = new Label() { Text = "Style", ToolTip = "Style of line to display", VerticalAlignment = VerticalAlignment.Center };
+        private ListBox lB_ScaleStyle = new ListBox();
 
         // text settings labels and textboxes
         private Label lbl_TextGap = new Label() { Text = "Gap", ToolTip = "Gap between text and scale line in pixels.", VerticalAlignment = VerticalAlignment.Center };
@@ -27,7 +29,7 @@ namespace ScaleOverlay
         private Label lbl_TextHeight = new Label() { Text = "Height", ToolTip = "Height of text in pixels", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_TextHeight = new TextBox();
         private Label lbl_TextFont = new Label() { Text = "Font", ToolTip = "Font of text.", VerticalAlignment = VerticalAlignment.Center };
-        private FontPicker fP_TextFont = new FontPicker();
+        private FontPicker fP_TextFont = new FontPicker(Settings.TextFont.ToEtoFont());
 
         // margin settings labels and textboxes
         private Label lbl_OffsetX = new Label() { Text = "Offset X", ToolTip = "Horizontal offset of scale line from bottom right corner of viewport in pixels.", VerticalAlignment = VerticalAlignment.Center };
@@ -58,6 +60,7 @@ namespace ScaleOverlay
         public System.Drawing.Color TextColor { get; set; }
         public double LineDividerLengthFactor { get; set; }
         public Rhino.DocObjects.Font TextFont { get; set; }
+        public ScaleStyle ScaleStyle { get; set; }
 
         #endregion
 
@@ -74,6 +77,8 @@ namespace ScaleOverlay
             tB_LineMaxLength.Text = LineMaxLength.ToString();
             LineDividerLengthFactor = Settings.LineSubdividerLengthFactor;
             tB_LineDividerLengthFactor.Text = LineDividerLengthFactor.ToString();
+            ScaleStyle = Settings.Style;
+            lB_ScaleStyle.DataStore = Enum.GetNames(typeof(ScaleOverlay.ScaleStyle));
 
             // text
             TextHeight = Settings.TextHeight;
@@ -117,6 +122,7 @@ namespace ScaleOverlay
             btn_LineColor.Click += btn_LineColor_Clicked;
             btn_TextColor.Click += btn_TextColor_Clicked;
             fP_TextFont.ValueChanged += fP_TextFont_ValueChanged;
+            lB_ScaleStyle.SelectedIndexChanged += lB_ScaleStyle_SelectedIndexChanged;
             #endregion
 
             // create layout
@@ -128,8 +134,9 @@ namespace ScaleOverlay
             // create empty groupBox and fill with linesettings controls
             var group = new DynamicGroup();
             group.Title = "Line Settings";
-            group.AddRow(new DynamicRow(new Control[] { lbl_LineThickness, tB_LineThickness }));
+            group.AddRow(new DynamicRow(new Control[] { lbl_ScaleStyle, lB_ScaleStyle }));
             group.AddRow(new DynamicRow(new Control[] { lbl_LineMaxLength, tB_LineMaxLength }));
+            group.AddRow(new DynamicRow(new Control[] { lbl_LineThickness, tB_LineThickness }));
             group.AddRow(new DynamicRow(new Control[] { lbl_LineDividerLengthFactor, tB_LineDividerLengthFactor }));
 
             row.Add(group);
@@ -173,6 +180,27 @@ namespace ScaleOverlay
             layout.Add(null);
             layout.EndHorizontal();
             Content = layout;
+        }
+
+        private void lB_ScaleStyle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ScaleStyle = (ScaleStyle)Enum.Parse(typeof(ScaleStyle), lB_ScaleStyle.SelectedValue.ToString());
+            switch (ScaleStyle)
+            {
+                case ScaleStyle.Line:
+                    tB_LineThickness.Enabled = true;
+                    tB_LineDividerLengthFactor.Enabled = false;
+                    break;
+                case ScaleStyle.Ruler:
+                    tB_LineDividerLengthFactor.Enabled = true;
+                    break;
+                case ScaleStyle.Map:
+                    tB_LineDividerLengthFactor.Enabled = false;
+                    tB_LineThickness.Enabled = false;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void fP_TextFont_ValueChanged(object sender, EventArgs e)
