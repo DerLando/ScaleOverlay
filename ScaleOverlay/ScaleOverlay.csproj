@@ -56,6 +56,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EtoOptionsPageControl.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Line2d.cs" />
     <Compile Include="OptionsPage.cs" />
     <Compile Include="ScaleConduit.cs" />
     <Compile Include="Settings.cs" />

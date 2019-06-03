@@ -8,6 +8,9 @@ using Rhino.Input.Custom;
 
 namespace ScaleOverlay
 {
+    /// <summary>
+    /// Command to toggle the scale conduit between active and inactive
+    /// </summary>
     public class ToggleScaleOverlay : Command
     {
         readonly static ScaleConduit scaleConduit = new ScaleConduit();

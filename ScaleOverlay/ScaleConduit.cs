@@ -9,8 +9,17 @@ using System.Threading.Tasks;
 
 namespace ScaleOverlay
 {
+    /// <summary>
+    /// Custom implementation of Rhino.Display.DisplayConduit to handle drawing of scale in rhinoviewports
+    /// <see cref="Rhino.Display.DisplayConduit"/>
+    /// </summary>
     class ScaleConduit : DisplayConduit
     {
+        /// <summary>
+        /// Helper to determine the right amount of subdivisions for a given integer scale
+        /// </summary>
+        /// <param name="scale">scale to calculate subdivisioncount for</param>
+        /// <returns>subdivisioncount as int</returns>
         public static int GetSubDivisionCount(int scale)
         {
             if (scale > 1000) scale /= 10;
@@ -22,22 +31,58 @@ namespace ScaleOverlay
             return 0;
         }
 
-        public static System.Drawing.Point[,] SubdivideLine(System.Drawing.Point startPoint, System.Drawing.Point endPoint, int subDividionCount, int lineLength)
+        /// <summary>
+        /// Subdivides a line by a given number of subdivisions
+        /// </summary>
+        /// <param name="line">line to subdivide</param>
+        /// <param name="subDividionCount">number of subdivisions</param>
+        /// <returns>multidimensional array of start and end points of subdivision lines</returns>
+        public static System.Drawing.Point[] SubdivideLine(Line2d line, int subDividionCount)
         {
-            System.Drawing.Point[,] lines = new System.Drawing.Point[subDividionCount - 1, 2];
-            int mainLineLength = Math.Abs(startPoint.X - endPoint.X);
-            int divisionLength = mainLineLength / subDividionCount;
-            int divisorHeight = startPoint.Y + lineLength;
+            // create an array for subdivision points
+            System.Drawing.Point[] points = new System.Drawing.Point[subDividionCount - 1];
 
-            for (int i = 0; i < subDividionCount - 1; i++)
+            // calculate length of a single subdivision step
+            // there is a possiblity of a round of error here
+            // e.g.: 95 / 10 = 9
+            int divisionLength = line.Length / subDividionCount;
+            int[] divisionStepLengths = Enumerable.Repeat(divisionLength, points.Length).ToArray();
+
+            // clean up round error if any
+            if(divisionLength * subDividionCount != line.Length)
             {
-                lines[i, 0] = new System.Drawing.Point(startPoint.X - (i + 1) * divisionLength, startPoint.Y);
-                lines[i, 1] = new System.Drawing.Point(lines[i, 0].X, divisorHeight);
+                var i = 0;
+                while (divisionStepLengths.Sum() + divisionLength < line.Length)
+                {
+                    if (i % 2 == 0) divisionStepLengths[i] += 1;
+                    else divisionStepLengths[divisionStepLengths.Length - i] += 1;
+
+                    i += 1;
+                }
             }
 
-            return lines;
+            // iterate over points array and fill it
+            var startPoint = line.From;
+            for (int i = 0; i < divisionStepLengths.Length; i++)
+            {
+                points[i] = new System.Drawing.Point(startPoint.X - divisionStepLengths[i], line.From.Y);
+                startPoint = points[i];
+            }
+
+            return points;
         }
 
+        public static Line2d CreateSubdividerLine(System.Drawing.Point startPoint, int lineLength)
+        {
+            return new Line2d(startPoint, new System.Drawing.Point(startPoint.X, startPoint.Y + lineLength));
+        }
+
+        /// <summary>
+        /// Simple switch statement to return the abbreviation of a UnitSystem
+        /// <see cref="Rhino.UnitSystem"/>
+        /// </summary>
+        /// <param name="system">UnitSystem to get abbreviation for</param>
+        /// <returns></returns>
         public static string UnitStringFromUnitSystem(UnitSystem system)
         {
             switch (system)
@@ -101,7 +146,14 @@ namespace ScaleOverlay
             }
         }
 
-        public static System.Drawing.Point FindBestFittingScaleLine(double pixelsPerUnit, System.Drawing.Point startPoint, out int foundScale)
+        /// <summary>
+        /// Function to determine the best fitting line and scale for a given scalefactor in pixels per unit
+        /// </summary>
+        /// <param name="pixelsPerUnit">scalefactor</param>
+        /// <param name="startPoint">startpoint of line</param>
+        /// <param name="foundScale">scale corresponding to found line</param>
+        /// <returns>end point of line</returns>
+        public static Line2d FindBestFittingScaleLine(double pixelsPerUnit, System.Drawing.Point startPoint, out int foundScale)
         {
             double minimumDeviation = 1000000;
             System.Drawing.Point foundPoint = new System.Drawing.Point();
@@ -120,7 +172,7 @@ namespace ScaleOverlay
                 }
             }
 
-            return foundPoint;
+            return new Line2d(startPoint, foundPoint);
         }
 
         public static System.Drawing.Point LineEndFromScale(int scale, System.Drawing.Point startPoint)
@@ -128,6 +180,11 @@ namespace ScaleOverlay
             return new System.Drawing.Point(startPoint.X - scale, startPoint.Y);
         }
 
+        /// <summary>
+        /// Gets scale factor of a given viewport in pixels per unit
+        /// </summary>
+        /// <param name="viewport">viewport to calculate scale factor for</param>
+        /// <returns>scale factor in pixels per unit</returns>
         public static double GetViewportScale(RhinoViewport viewport)
         {
             if (!viewport.IsPlanView) return 0;
@@ -138,6 +195,11 @@ namespace ScaleOverlay
             return pixelsPerUnit;
         }
 
+        /// <summary>
+        /// Override standard behaviour of DrawForeground to draw scale on screen
+        /// <see cref="Rhino.Display.DisplayConduit.DrawForeground(DrawEventArgs)"/>
+        /// </summary>
+        /// <param name="e">drawEventArgs e</param>
         protected override void DrawForeground(DrawEventArgs e)
         {
             var bounds = e.Viewport.Bounds;
@@ -145,14 +207,14 @@ namespace ScaleOverlay
             var pixelsPerUnit = GetViewportScale(e.Viewport);
             if (pixelsPerUnit != 0)
             {
-                // find best end point
-                var ptEnd = FindBestFittingScaleLine(pixelsPerUnit, ptCorner, out var foundScale);
+                // find best line
+                var line = FindBestFittingScaleLine(pixelsPerUnit, ptCorner, out var foundScale);
 
                 // draw corresponding line
-                e.Display.Draw2dLine(ptCorner, ptEnd, Settings.LineColor, Settings.LineThickness);
+                e.Display.DrawLine2d(line, Settings.LineColor, Settings.LineThickness);
 
                 // find boundary of text to draw
-                var textOrigin = new Point2d(ptEnd.X, ptEnd.Y);
+                var textOrigin = new Point2d(line.To.X, line.To.Y);
                 string text = $"{foundScale} {UnitStringFromUnitSystem(RhinoDoc.ActiveDoc.ModelUnitSystem)}";
                 var textRect = e.Display.Measure2dText(text, textOrigin, false, 0, Settings.TextHeight, "Arial");
 
@@ -162,17 +224,17 @@ namespace ScaleOverlay
 
                 // draw line ends
                 e.Display.Draw2dLine(ptCorner, new System.Drawing.Point(ptCorner.X, ptCorner.Y + textRect.Height), Settings.LineColor, Settings.LineThickness);
-                e.Display.Draw2dLine(ptEnd, new System.Drawing.Point(ptEnd.X, ptEnd.Y + textRect.Height), Settings.LineColor, Settings.LineThickness);
+                e.Display.Draw2dLine(line.To, new System.Drawing.Point(line.To.X, line.To.Y + textRect.Height), Settings.LineColor, Settings.LineThickness);
 
                 // draw line divisors
                 int subdivisionCount = GetSubDivisionCount(foundScale);
                 if(subdivisionCount != 0)
                 {
                     int lineLength = Convert.ToInt32(Settings.LineSubdividerLengthFactor * textRect.Height);
-                    var subdivisors = SubdivideLine(ptCorner, ptEnd, subdivisionCount, lineLength);
-                    for (int i = 0; i < subdivisionCount - 1; i++)
+                    var subdivisonPoints = SubdivideLine(line, subdivisionCount);
+                    for (int i = 0; i < subdivisonPoints.Length; i++)
                     {
-                        e.Display.Draw2dLine(subdivisors[i, 0], subdivisors[i, 1], Settings.LineColor, Convert.ToInt32(Settings.LineThickness * Settings.LineSubdividerLengthFactor));
+                        e.Display.DrawLine2d(CreateSubdividerLine(subdivisonPoints[i], lineLength), Settings.LineColor, Convert.ToInt32(Settings.LineThickness * Settings.LineSubdividerLengthFactor));
                     }
 
                 }

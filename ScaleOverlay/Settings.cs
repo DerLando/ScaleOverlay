@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace ScaleOverlay
 {
+    /// <summary>
+    /// Settings class to store and change all relevant settings
+    /// </summary>
     public static class Settings
     {
         // changeable settings
@@ -51,6 +54,9 @@ namespace ScaleOverlay
         public static double MinSubdividerFactor = 0.01;
         public static double MaxSubdividerFactor = 1.00;
 
+        /// <summary>
+        /// Restores all settings to their default values
+        /// </summary>
         public static void RestoreDefaults()
         {
             OffsetX = DefaultOffsetX;
@@ -63,29 +69,5 @@ namespace ScaleOverlay
             TextColor = DefaultTextColor;
             LineSubdividerLengthFactor = DefaultLineSubdividerLengthFactor;
         }
-
-        //public static void SetOffsetX(int offset)
-        //{
-        //    if (offset <= 0 || offset > MaxOffsetX) OffsetX = DefaultOffsetX;
-        //    else OffsetX = offset;
-        //}
-
-        //public static void SetOffsetY(int offset)
-        //{
-        //    if (offset <= 0 || offset > MaxOffsetY) OffsetY = DefaultOffsetY;
-        //    else OffsetY = offset;
-        //}
-
-        //public static void SetLineThickness(int thickness)
-        //{
-        //    if (thickness <= 0 || thickness > MaxLineThickness) LineThickness = DefaultLineThickness;
-        //    else LineThickness = thickness;
-        //}
-
-        //public static void SetLineMaxLength(int length)
-        //{
-        //    if (length <= 0 || length > MaxLineMaxLength) LineMaxLength = DefaultLineMaxLength;
-
-        //}
     }
 }

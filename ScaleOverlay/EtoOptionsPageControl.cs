@@ -7,10 +7,13 @@ using System.Collections;
 
 namespace ScaleOverlay
 {
+    /// <summary>
+    /// Main form that gets drawn when the optionsPage for this plugin is opened
+    /// </summary>
     public class EtoOptionsPageControl : Panel
     {
         #region Elements
-        // line
+        // line settings labels and textboxes
         private Label lbl_LineThickness = new Label() { Text = "Thickness", ToolTip = "Thickness of scale line in pixels.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_LineThickness = new TextBox();
         private Label lbl_LineMaxLength = new Label() { Text = "Average Length", ToolTip = "Average length of scale line before jumping to another scale in pixels.", VerticalAlignment = VerticalAlignment.Center };
@@ -18,25 +21,29 @@ namespace ScaleOverlay
         private Label lbl_LineDividerLengthFactor = new Label() { Text = "Subdivider Length Factor", ToolTip = "Length of supdividers as a factor of the length of first and last divider.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_LineDividerLengthFactor = new TextBox();
 
-        // text
+        // text settings labels and textboxes
         private Label lbl_TextGap = new Label() { Text = "Gap", ToolTip = "Gap between text and scale line in pixels.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_TextGap = new TextBox();
         private Label lbl_TextHeight = new Label() { Text = "Height", ToolTip = "Height of text in pixels", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_TextHeight = new TextBox();
 
-        // margins
+        // margin settings labels and textboxes
         private Label lbl_OffsetX = new Label() { Text = "Offset X", ToolTip = "Horizontal offset of scale line from bottom right corner of viewport in pixels.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_OffsetX = new TextBox();
         private Label lbl_OffsetY = new Label() { Text = "Offset Y", ToolTip = "Vertical offset of scale line from bottom right corner of viewport in pixels.", VerticalAlignment = VerticalAlignment.Center };
         private TextBox tB_OffsetY = new TextBox();
 
-        // colors
+        // color settings margins and buttons
         private Label lbl_LineColor = new Label() { Text = "Line Color", ToolTip = "Color of scale line.", VerticalAlignment = VerticalAlignment.Center };
         private Button btn_LineColor = new Button() { Text = "", BackgroundColor = Settings.LineColor.ToEto() };
         private Label lbl_TextColor = new Label() { Text = "Text Color", ToolTip = "Color of text.", VerticalAlignment = VerticalAlignment.Center };
         private Button btn_TextColor = new Button() { Text = "", BackgroundColor = Settings.TextColor.ToEto() };
         #endregion
 
+        /// <summary>
+        /// Properties this from passes on when OptionsPage.OnApply is triggered
+        /// <see cref="OptionsPage.OnApply"/>
+        /// </summary>
         #region Properties to pass
 
         public int LineThickness { get; set; }
@@ -51,6 +58,10 @@ namespace ScaleOverlay
 
         #endregion
 
+        /// <summary>
+        /// Helper to load Settings and populate the form elements
+        /// <see cref="Settings"/>
+        /// </summary>
         public void LoadSettings()
         {
             // line
@@ -81,11 +92,15 @@ namespace ScaleOverlay
 
         }
 
+        /// <summary>
+        /// Public parameterless constructor
+        /// </summary>
         public EtoOptionsPageControl()
         {
-
+            // call this.LoadSettings() to initialize default values for the form
             LoadSettings();
 
+            // initialize all eventhandlers for forms
             #region eventHandlers
             tB_LineThickness.TextChanged += tB_LineThickness_TextChanged;
             tB_LineMaxLength.TextChanged += tB_LineMaxLength_TextChanged;
@@ -98,11 +113,13 @@ namespace ScaleOverlay
             btn_TextColor.Click += btn_TextColor_Clicked;
             #endregion
 
+            // create layout
             var layout = new DynamicLayout() { DefaultSpacing = new Size(5, 5), Padding = new Padding(10) };
 
-            // line
+            // create row vor line settings
             var row = layout.BeginHorizontal();
 
+            // create empty groupBox and fill with linesettings controls
             var group = new DynamicGroup();
             group.Title = "Line Settings";
             group.AddRow(new DynamicRow(new Control[] { lbl_LineThickness, tB_LineThickness }));
@@ -111,9 +128,10 @@ namespace ScaleOverlay
 
             row.Add(group);
 
-            // text
+            // create row for text settings
             row = layout.EndBeginHorizontal();
 
+            // create empty groupBox and fill with textsettings controls
             group = new DynamicGroup();
             group.Title = "Text Settings";
             group.AddRow(new DynamicRow(new Control[] { lbl_TextHeight, tB_TextHeight }));
@@ -121,9 +139,10 @@ namespace ScaleOverlay
 
             row.Add(group);
 
-            // margins
+            // create row for margin settings
             row = layout.EndBeginHorizontal();
 
+            // create empty groupBox and fill with marginsettings controls
             group = new DynamicGroup();
             group.Title = "Margin Settings";
             group.AddRow(new DynamicRow(new Control[] { lbl_OffsetX, tB_OffsetX }));
@@ -131,9 +150,10 @@ namespace ScaleOverlay
 
             row.Add(group);
 
-            // colors
+            // create row for color settings
             row = layout.EndBeginHorizontal();
 
+            // create empty groupBox and fill with colorsettings controls
             group = new DynamicGroup();
             group.Title = "Color Settings";
             group.AddRow(new DynamicRow(new Control[] { lbl_LineColor, btn_LineColor }));
@@ -141,16 +161,7 @@ namespace ScaleOverlay
 
             row.Add(group);
 
-            //var maxScale = (from dRow in layout.Rows select ((DynamicGroup)dRow[0]).Table.GetColumnScale(0)).OrderByDescending(x => x).First();
-            //foreach (var dRow in layout.Rows)
-            //{
-            //    group = dRow[0] as DynamicGroup;
-            //    group.Table.SetColumnScale(0, maxScale);
-            //}
-
-            //// add null to end dynamic section
-            //layout.Add(null);
-            // set Content to layout
+            // Clean up emd of layout and add null
             layout.EndBeginHorizontal();
             layout.Add(null);
             layout.EndHorizontal();

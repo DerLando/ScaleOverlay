@@ -28,6 +28,12 @@ namespace ScaleOverlay
         // You can override methods here to change the plug-in behavior on
         // loading and shut down, add options pages to the Rhino _Option command
         // and maintain plug-in wide options in a document.
+
+        /// <summary>
+        /// override OptionsDialogPages to add out own custom OptionsPage
+        /// <see cref="OptionsPage"/>
+        /// </summary>
+        /// <param name="pages"></param>
         protected override void OptionsDialogPages(List<OptionsDialogPage> pages)
         {
             var optionsPage = new OptionsPage();

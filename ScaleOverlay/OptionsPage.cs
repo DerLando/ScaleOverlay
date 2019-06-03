@@ -3,8 +3,12 @@ using Rhino.UI;
 
 namespace ScaleOverlay
 {
+    /// <summary>
+    /// Options Page for this plugin, gets added to the Rhino options menu
+    /// </summary>
     public class OptionsPage : OptionsDialogPage
     {
+        // page control that gets drawn as content
         private EtoOptionsPageControl m_control;
 
         public OptionsPage()
@@ -17,6 +21,10 @@ namespace ScaleOverlay
             get { return m_control ?? (m_control = new EtoOptionsPageControl()); }
         }
 
+        /// <summary>
+        /// OnApply override to handle a user clicking "OK" at the bottom of the options page
+        /// </summary>
+        /// <returns>true</returns>
         public override bool OnApply()
         {
             // TODO: Check nulls
@@ -48,8 +56,15 @@ namespace ScaleOverlay
             // Do nothing
         }
 
+        /// <summary>
+        /// We want to be able to reset to default
+        /// </summary>
         public override bool ShowDefaultsButton => true;
 
+        /// <summary>
+        /// OnDefaults we just call Settings.RestoreDefaults()
+        /// <see cref="Settings.RestoreDefaults"/>
+        /// </summary>
         public override void OnDefaults()
         {
             Settings.RestoreDefaults();
